@@ -19,27 +19,40 @@ public class FriendPanel extends JPanel {
 	        myProfilePanel.setBackground(Colors.BGROUND);
 	        myProfilePanel.setLayout(new BoxLayout(myProfilePanel, BoxLayout.X_AXIS));
 	        myProfilePanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+			        // 아래에 뜰 패널 미리 생성해놓고 숨기기
+			        JPanel profileDetailPanel = new JPanel();
+			        profileDetailPanel.add(new JLabel("여기에 내 프로필 상세내용"));
+			        profileDetailPanel.setVisible(false);  // 처음엔 안보이게
+			        profileDetailPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			        // 버튼 클릭시 패널 show/hide
+			        myProfilePanel.addActionListener(e -> {
+			            boolean now = profileDetailPanel.isVisible();
+			            profileDetailPanel.setVisible(!now);
+			            // 레이아웃 다시 갱신
+			            revalidate();
+			        });
 	        
-	        //내 프로필 이미지
-	        ImageIcon profileImg = new ImageIcon("src/KokoaTalkImg/free_people.png");
-	        JLabel imgLabel = new JLabel(new ImageIcon(profileImg.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
-	        myProfilePanel.add(imgLabel);
+		        //내 프로필 이미지
+		        ImageIcon profileImg = new ImageIcon("src/KokoaTalkImg/free_people.png");
+		        JLabel imgLabel = new JLabel(new ImageIcon(profileImg.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		        myProfilePanel.add(imgLabel);		        
+			        
+		        //내 이름/상태메시지
+		        JPanel infoPanel = new JPanel();
+		        infoPanel.setBackground(Colors.BGROUND);
+		        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+		        JLabel nameLabel = new JLabel("이차원");
+		        nameLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+		        JLabel statusLabel = new JLabel("상태메시지");
+		        statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		        infoPanel.add(nameLabel);
+		        infoPanel.add(statusLabel);
 	
-	        //내 이름/상태메시지
-	        JPanel infoPanel = new JPanel();
-	        infoPanel.setBackground(Colors.BGROUND);
-	        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-	        JLabel nameLabel = new JLabel("이차원");
-	        nameLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-	        JLabel statusLabel = new JLabel("상태메시지");
-	        statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
-	        infoPanel.add(nameLabel);
-	        infoPanel.add(statusLabel);
-
-	        myProfilePanel.add(Box.createRigidArea(new Dimension(10,0)));
-	        myProfilePanel.add(infoPanel);
-
-	        friendListPanel.add(myProfilePanel);
+		        myProfilePanel.add(Box.createRigidArea(new Dimension(10,0)));
+		        myProfilePanel.add(infoPanel);
+	
+		        friendListPanel.add(myProfilePanel);
+		        friendListPanel.add(profileDetailPanel);
 	        
 	        // 즐겨찾기	        
 	        JLabel Favorites = new JLabel("즐겨찾기");
