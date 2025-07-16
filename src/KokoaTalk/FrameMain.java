@@ -3,6 +3,8 @@ package KokoaTalk;
 import java.awt.*;
 import javax.swing.*;
 
+import KokoaTalk.Profile.FriendPanel;
+
 public class FrameMain extends JFrame{
 	private CardLayout cardLayout;
 	private JPanel cardPanel;

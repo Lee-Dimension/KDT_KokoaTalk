@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-class ScrollbarUI extends BasicScrollBarUI {
+public class ScrollbarUI extends BasicScrollBarUI {
     private static final Color THUMB_COLOR = Colors.TEXT;  // 막대 색
 
     @Override
@@ -67,7 +67,7 @@ class ScrollbarUI extends BasicScrollBarUI {
     @Override
     public Dimension getPreferredSize(JComponent c) {
         if (scrollbar.getOrientation() == JScrollBar.VERTICAL) {
-            return new Dimension(10, super.getPreferredSize(c).height); // ← 폭(두께)
+            return new Dimension(10, super.getPreferredSize(c).height); // ← 폭(두께)2
         } else {
             return new Dimension(super.getPreferredSize(c).width, 8); // ← 수평 스크롤바 높이
         }
