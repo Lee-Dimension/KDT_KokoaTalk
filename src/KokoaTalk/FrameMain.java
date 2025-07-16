@@ -90,7 +90,7 @@ public class FrameMain extends JFrame{
 		        	cardLayout.show(mainPanel, "CHAT");
 		            header.setHeaderText("채팅");
 		        });
-		        
+		       
 	        f.getContentPane().add(screenPanel);		          
         f.setVisible(true);
     }

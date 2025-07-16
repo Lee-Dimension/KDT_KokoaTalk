@@ -59,10 +59,12 @@ public class ChatListPanel extends JPanel {
             chatListPanel.add(new JSeparator(JSeparator.HORIZONTAL));
         }
 
-        JScrollPane scrollPane = new JScrollPane(chatListPanel);
-        scrollPane.setBorder(null);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        JScrollPane scrollPanel = new JScrollPane(chatListPanel);
+        scrollPanel.setBorder(null);
+        scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        scrollPanel.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
 
-        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPanel, BorderLayout.CENTER);
     }
 }

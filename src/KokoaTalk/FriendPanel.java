@@ -118,9 +118,11 @@ public class FriendPanel extends JPanel {
         JScrollPane scrollPanel = new JScrollPane(friendListPanel);
         scrollPanel.setBorder(null);
         scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
-//        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(10, Integer.MAX_VALUE));
+        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(10, Integer.MAX_VALUE));
 
-        
+        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        scrollPanel.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+
 
         // 레이아웃 배치
         add(scrollPanel, BorderLayout.CENTER);
