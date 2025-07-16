@@ -114,14 +114,13 @@ public class FriendPanel extends JPanel {
 		            friendItem2.setAlignmentX(Component.LEFT_ALIGNMENT);
 	            friendListPanel.add(friendItem2);
 	        }
-	        
-	        
-	        
-	        
-
+	        	        	        	      
         JScrollPane scrollPanel = new JScrollPane(friendListPanel);
         scrollPanel.setBorder(null);
         scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+//        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(10, Integer.MAX_VALUE));
+
+        
 
         // 레이아웃 배치
         add(scrollPanel, BorderLayout.CENTER);
