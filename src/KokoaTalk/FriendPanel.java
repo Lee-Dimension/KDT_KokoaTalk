@@ -85,10 +85,24 @@ public class FriendPanel extends JPanel {
 		            info.add(fname);
 		            info.add(fstatus);
 		            
+			        // 아래에 뜰 패널 미리 생성해놓고 숨기기
+			        JPanel friendDetailPanel = new JPanel();
+			        friendDetailPanel.add(new JLabel("여기에 내 프로필 상세내용"));
+			        friendDetailPanel.setVisible(false);  // 처음엔 안보이게
+			        friendDetailPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+			        // 버튼 클릭시 패널 show/hide
+			        friendItem.addActionListener(e -> {
+			            boolean now1 = friendDetailPanel.isVisible();
+			            friendDetailPanel.setVisible(!now1);
+			            // 레이아웃 다시 갱신
+			            revalidate();    
+			            });
+		            
 	            friendItem.add(Box.createRigidArea(new Dimension(10,0)));
 	            friendItem.add(info);
 	            friendItem.setAlignmentX(Component.LEFT_ALIGNMENT);
 	            friendListPanel.add(friendItem);
+		        friendListPanel.add(friendDetailPanel);
 	        }
 	       
 	        // 친구       
@@ -128,16 +142,12 @@ public class FriendPanel extends JPanel {
 	            friendListPanel.add(friendItem2);
 	        }
 	        	        	        	      
-        JScrollPane scrollPanel = new JScrollPane(friendListPanel);
-        scrollPanel.setBorder(null);
-        scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(10, Integer.MAX_VALUE));
-
-        scrollPanel.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-        scrollPanel.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-
+        JScrollPane scrollPane = new JScrollPane(friendListPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
+        scrollPane.getHorizontalScrollBar().setUI(new ScrollbarUI());
 
         // 레이아웃 배치
-        add(scrollPanel, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
     }
 }

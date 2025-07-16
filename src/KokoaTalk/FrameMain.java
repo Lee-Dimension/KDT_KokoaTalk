@@ -10,7 +10,7 @@ public class FrameMain extends JFrame{
     public static void main(String[] args) {
     	
     	//메인 프레임
-        JFrame f = new JFrame("성적 처리기");
+        JFrame f = new JFrame("코코아톡");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(400,800);
         f.setMinimumSize(new Dimension(400,800));
@@ -25,7 +25,7 @@ public class FrameMain extends JFrame{
 		        //박스 패널의 첫 번째 박스(헤더)
         		Header header = new Header("친구");         	
 		        c.gridy   = 0;
-		        c.weighty = 0.03;
+		        c.weighty = 0.1;
 		        screenPanel.add(header.getPanel(), c);
 		        	        
 		        //박스 패널의 두 번째 박스(메인화면, 카드)
@@ -37,7 +37,7 @@ public class FrameMain extends JFrame{
 			        mainPanel.add(new ChatListPanel(), "CHAT");
 			    
 			    c.gridy   = 1;
-			    c.weighty = 0.8;
+			    c.weighty = 9.8;
 			    screenPanel.add(mainPanel,c);
 		       		    
 		        //박스 패널의 세 번째 박스(버튼)
@@ -77,7 +77,7 @@ public class FrameMain extends JFrame{
 			        btnPanel.add(btnChat);
 	
 		        c.gridy   = 2;
-		        c.weighty = 0.02;
+		        c.weighty = 0.1;
 		        screenPanel.add(btnPanel, c);
 		        
 		        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
