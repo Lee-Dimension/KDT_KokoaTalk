@@ -1,6 +1,6 @@
 package KokoaTalk.ChatList;
 
-import KokoaTalk.Chatting.Colors;
+import KokoaTalk.Colors;
 import KokoaTalk.Chatting.ChattingMainPanel;
 
 import javax.swing.*;
