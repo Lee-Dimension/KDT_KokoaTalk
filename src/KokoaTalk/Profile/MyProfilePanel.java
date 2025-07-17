@@ -5,9 +5,11 @@ import java.awt.*;
 import KokoaTalk.Colors;
 
 public class MyProfilePanel extends JPanel {
-    private JPanel detailPanel;
+    private JPanel  detailPanel;
+    private String name;
+    private String stateMessage;
 
-    public MyProfilePanel() {
+    public MyProfilePanel(String name, String stateMessage) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setBackground(Colors.BGROUND);
         setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
@@ -22,9 +24,9 @@ public class MyProfilePanel extends JPanel {
         JPanel infoPanel = new JPanel();
         infoPanel.setBackground(Colors.BGROUND);
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        JLabel nameLabel = new JLabel("이차원");
+        JLabel nameLabel = new JLabel(name);
         nameLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        JLabel statusLabel = new JLabel("상태메시지");
+        JLabel statusLabel = new JLabel(stateMessage);
         statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
         infoPanel.add(nameLabel);
         infoPanel.add(statusLabel);
@@ -33,9 +35,35 @@ public class MyProfilePanel extends JPanel {
 
         // Detail Panel
         detailPanel = new JPanel();
-        detailPanel.add(new JLabel("여기에 각 버튼 추가"));
         detailPanel.setVisible(false);
+        detailPanel.setMaximumSize(new Dimension(380, 60));
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.X_AXIS));
+        detailPanel.setBackground(Colors.BGROUNDDEEP); 
         detailPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(Box.createHorizontalGlue());
+	    JButton talkBtn = new JButton("이름변경");
+		    HideBtnDesign.apply(talkBtn);
+		    talkBtn.addActionListener(e -> {
+		        // 버튼별 기능 분기
+		    });
+		    detailPanel.add(talkBtn);
+            detailPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+	    JButton stateChange = new JButton("상태메시지");
+		    HideBtnDesign.apply(stateChange);
+		    stateChange.addActionListener(e -> {
+		        // 버튼별 기능 분기
+		    });
+		    detailPanel.add(stateChange);
+            detailPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+	    JButton profile =  new JButton("프로필사진");
+		    HideBtnDesign.apply(profile);
+		    profile.addActionListener(e -> {
+		        // 버튼별 기능 분기
+		    });
+		    detailPanel.add(profile);;
+            detailPanel.add(Box.createRigidArea(new Dimension(5, 0)));      
+
+        detailPanel.add(Box.createHorizontalGlue());
 
         // 클릭 이벤트 (여기서는 패널 전체에)
         this.addMouseListener(new java.awt.event.MouseAdapter() {

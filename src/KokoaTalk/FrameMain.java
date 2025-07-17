@@ -5,18 +5,20 @@ import javax.swing.*;
 import KokoaTalk.ChatList.ChatListPanel;
 
 import KokoaTalk.Profile.FriendPanel;
+import KokoaTalk.Profile.UserClass;
 
 public class FrameMain extends JFrame{
 	private CardLayout cardLayout;
 	private JPanel cardPanel;
 	
-    public static void main(String[] args) {
-    	
-    	//메인 프레임
+	public FrameMain(String id) {
+		
+		//메인 프레임
         JFrame f = new JFrame("코코아톡");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(400,800);
         f.setMinimumSize(new Dimension(400,800));
+        f.setLocationRelativeTo(null);
         
         	//그리드백 패널(1단 레이아웃)
         	JPanel screenPanel = new JPanel(new GridBagLayout());
@@ -34,9 +36,10 @@ public class FrameMain extends JFrame{
 		        //박스 패널의 두 번째 박스(메인화면, 카드)
 		        JPanel mainPanel = new JPanel(new CardLayout());
 		        mainPanel.setBackground(Color.LIGHT_GRAY);
+		     
 		        
 			        // 각 화면별 패널 객체 생성
-			        mainPanel.add(new FriendPanel(),   "FRIEND");
+			        mainPanel.add(new FriendPanel(id),   "FRIEND");
 			        mainPanel.add(new ChatListPanel(), "CHAT");
 			    
 			    c.gridy   = 1;
@@ -45,7 +48,7 @@ public class FrameMain extends JFrame{
 		       		    
 		        //박스 패널의 세 번째 박스(버튼)
 		        JPanel btnPanel = new JPanel(new GridLayout(1,2,5,5));
-		        btnPanel.setBackground(Colors.BGROUNDDEPP);
+		        btnPanel.setBackground(Colors.BGROUNDDEEP);
 		        
 		        	//이미지 스케일링
 		        	// 원본 이미지 로드
@@ -58,7 +61,7 @@ public class FrameMain extends JFrame{
 		        	ImageIcon imgFriend = new ImageIcon(scaledImage);
 		        	
 			        JButton btnFriend = new JButton(imgFriend);
-			        btnFriend.setBackground(Colors.BGROUNDDEPP);
+			        btnFriend.setBackground(Colors.BGROUNDDEEP);
 			        btnFriend.setBorderPainted(false);      // 버튼 테두리 제거
 			        btnFriend.setFocusPainted(false);       // 포커스 표시 제거
 			        btnPanel.add(btnFriend);
@@ -74,7 +77,7 @@ public class FrameMain extends JFrame{
 		        	ImageIcon imgChat = new ImageIcon(scaledImage2);
 
 			        JButton btnChat = new JButton(imgChat);
-			        btnChat.setBackground(Colors.BGROUNDDEPP);
+			        btnChat.setBackground(Colors.BGROUNDDEEP);
 			        btnChat.setBorderPainted(false);      // 버튼 테두리 제거
 			        btnChat.setFocusPainted(false);       // 포커스 표시 제거
 			        btnPanel.add(btnChat);
@@ -96,5 +99,9 @@ public class FrameMain extends JFrame{
 		       
 	        f.getContentPane().add(screenPanel);		          
         f.setVisible(true);
+	}
+	
+    public static void main(String[] args) {
+    	
     }
 }
