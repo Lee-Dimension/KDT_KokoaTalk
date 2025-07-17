@@ -68,33 +68,17 @@ public class UserLoginGUI extends JFrame {
                 return;
             }
 
-            boolean loginSuccess = false;
-            String userName = "";
-
-            try (BufferedReader br = new BufferedReader(new FileReader("src/KokoaTalk/UserList/userList.txt"))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    String[] tokens = line.split(",");
-                    if (tokens.length >= 2) {
-                        String id = tokens[0].trim();
-                        String name = tokens[1].trim();
-                        if (enteredId.equals(id)) {
-                            loginSuccess = true;
-                            userName = name;
-                            break;
-                        }
-                    }
+            File userFile = new File("src/UserList/"+enteredId + ".ser");
+            if (userFile.exists()) {
+                // 직렬화된 객체 불러오기
+                UserClass user = UserFileManager.loadUser("src/UserList/"+enteredId + ".ser");
+                if (user != null) {
+                    JOptionPane.showMessageDialog(null, "로그인 성공! " + user.getName() + "님 환영합니다!");
+                    new FrameMain(enteredId);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "유저 정보 로딩 실패");
                 }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "파일을 읽는 도중 오류가 발생했습니다.");
-                return;
-            }
-
-            if (loginSuccess) {
-                JOptionPane.showMessageDialog(null, "로그인 성공! " + userName + "님 환영합니다!");
-                new FrameMain(enteredId);
-                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "해당 아이디를 찾을 수 없습니다.");
             }

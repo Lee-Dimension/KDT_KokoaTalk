@@ -1,3 +1,4 @@
+// FriendPanel에 들어가는 내 프로필 구역.
 package KokoaTalk.Profile;
 
 import javax.swing.*;

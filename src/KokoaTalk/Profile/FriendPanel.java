@@ -5,85 +5,91 @@ import javax.swing.*;
 import java.util.*;
 import KokoaTalk.ScrollbarUI;
 import KokoaTalk.Colors;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
+import java.io.*;
 
 public class FriendPanel extends JPanel {
 
-	public FriendPanel(String id) {
-	    setLayout(new BorderLayout());
-	    setBackground(Colors.BGROUND);
+    public FriendPanel(String id) {
+        setLayout(new BorderLayout());
+        setBackground(Colors.BGROUND);
 
-	    JPanel friendListPanel = new JPanel();
-	    friendListPanel.setBackground(Colors.BGROUND);
-	    friendListPanel.setLayout(new BoxLayout(friendListPanel, BoxLayout.Y_AXIS));
-	    friendListPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // 리스트 전체를 담을 패널(세로)
+        JPanel friendListPanel = new JPanel();
+        friendListPanel.setBackground(Colors.BGROUND);
+        friendListPanel.setLayout(new BoxLayout(friendListPanel, BoxLayout.Y_AXIS));
+        friendListPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-	    // ✅ 1. userList.txt 에서 id로 name과 statusMsg 가져오기
-	    String name = "이름 없음";
-	    String statusMsg = "";
+        // --- 내 프로필 ---
+        UserClass user = UserFileManager.loadUser("src/UserList/"+id + ".ser");
+        String name = "이름 없음";
+        String statusMsg = "";
 
-	    try (BufferedReader br = new BufferedReader(new FileReader("src/KokoaTalk/UserList/userList.txt"))) {
-	        String line;
-	        while ((line = br.readLine()) != null) {
-	            String[] tokens = line.split(",");
-	            if (tokens.length >= 3) {
-	                String userId = tokens[0].trim();
-	                if (userId.equals(id)) {
-	                    name = tokens[1].trim();
-	                    statusMsg = tokens[2].trim();
-	                    break;
-	                }
-	            }
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+        if (user != null) {
+            name = user.getName();
+            statusMsg = user.getStatusMsg();
+        }
 
-	    // ✅ 2. 읽어온 문자열로 MyProfilePanel 생성
-	    MyProfilePanel myProfilePanel = new MyProfilePanel(name, statusMsg);
-	    friendListPanel.add(myProfilePanel);
-	    friendListPanel.add(myProfilePanel.getDetailPanel());
-	    myProfilePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        MyProfilePanel myProfilePanel = new MyProfilePanel(name, statusMsg);
+        friendListPanel.add(myProfilePanel);
+        friendListPanel.add(myProfilePanel.getDetailPanel());
+        myProfilePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-	    // -------------------- 파일에서 친구정보 불러오기 -----------------------
-	    ArrayList<Friend> friendList = FriendLoader.loadFriendsFromFile("src/KokoaTalk/FriendList/" + id + ".txt");
+        // --- 친구 txt파일에서 id, 즐겨찾기 여부 읽기 ---
+     // 친구목록 파일에서 전체 친구와 즐겨찾기 분류
+        ArrayList<String> allFriendIds = new ArrayList<>();
+        HashSet<String> favoriteSet = new HashSet<>();
 
-	    ArrayList<Friend> favoriteFriends = new ArrayList<>();
-	    ArrayList<Friend> normalFriends = new ArrayList<>();
-	    for (Friend f : friendList) {
-	        if (f.isFavorite())
-	            favoriteFriends.add(f);
-	        else
-	            normalFriends.add(f);
-	    }
+        try (BufferedReader br = new BufferedReader(new FileReader("src/FriendList/" + id + ".txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 2) {
+                    String friendId = tokens[0].trim();
+                    boolean isFavorite = tokens[1].trim().equalsIgnoreCase("TRUE");
+                    allFriendIds.add(friendId);
+                    if (isFavorite) favoriteSet.add(friendId);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // 파일이 없으면 무시
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	    // ------------------- 즐겨찾기 구분 라벨 & 목록 출력 ----------------------
-	    friendListPanel.add(new FriendSectionLabel("즐겨찾기"));
-	    for (Friend f : favoriteFriends) {
-	        FriendItemPanel fip = new FriendItemPanel(f.getName(), f.getStatusMsg());
-	        friendListPanel.add(fip);
-	        friendListPanel.add(createDetailPanel(fip, true));
-	    }
+        // --- 즐겨찾기 친구 표시 ---
+        friendListPanel.add(new FriendSectionLabel("즐겨찾기"));
+        for (String friendId : allFriendIds) {
+            if (favoriteSet.contains(friendId)) {
+                UserClass friendUser = UserFileManager.loadUser("src/UserList/" + friendId + ".ser");
+                if (friendUser != null) {
+                    FriendItemPanel fip = new FriendItemPanel(friendUser.getName(), friendUser.getStatusMsg());
+                    friendListPanel.add(fip);
+                    friendListPanel.add(createDetailPanel(fip, true));
+                }
+            }
+        }
 
-	    // ------------------- 친구 구분 라벨 & 목록 출력 ----------------------
-	    friendListPanel.add(new FriendSectionLabel("친구"));
-	    for (Friend f : friendList ) {
-	        FriendItemPanel fip = new FriendItemPanel(f.getName(), f.getStatusMsg());
-	        friendListPanel.add(fip);
-	        friendListPanel.add(createDetailPanel(fip, false));
-	    }
+        // --- 모든 친구(=일반+즐찾) 표시 ---
+        friendListPanel.add(new FriendSectionLabel("친구"));
+        for (String friendId : allFriendIds) {
+            UserClass friendUser = UserFileManager.loadUser("src/UserList/" + friendId + ".ser");
+            if (friendUser != null) {
+                boolean isFavorite = favoriteSet.contains(friendId);
+                FriendItemPanel fip = new FriendItemPanel(friendUser.getName(), friendUser.getStatusMsg());
+                friendListPanel.add(fip);
+                friendListPanel.add(createDetailPanel(fip, isFavorite));
+            }
+        }
 
-	    JScrollPane scrollPane = new JScrollPane(friendListPanel);
-	    friendListPanel.add(Box.createVerticalGlue());
-	    scrollPane.setBorder(null);
-	    scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
-	    scrollPane.getHorizontalScrollBar().setUI(new ScrollbarUI());
-	    add(scrollPane, BorderLayout.CENTER);
-	}
+        friendListPanel.add(Box.createVerticalGlue());
 
+        // --- 스크롤바로 감싸기 ---
+        JScrollPane scrollPane = new JScrollPane(friendListPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUI(new ScrollbarUI());
+        scrollPane.getHorizontalScrollBar().setUI(new ScrollbarUI());
+        add(scrollPane, BorderLayout.CENTER);
+    }
 
     // 디테일 패널(버튼들) 생성 함수
     public JPanel createDetailPanel(FriendItemPanel fip, boolean isFavorite) {

@@ -1,11 +1,14 @@
 package KokoaTalk;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import KokoaTalk.ChatList.ChatListPanel;
 
 import KokoaTalk.Profile.FriendPanel;
-import KokoaTalk.Profile.UserClass;
 
 public class FrameMain extends JFrame{
 	private CardLayout cardLayout;
@@ -91,7 +94,81 @@ public class FrameMain extends JFrame{
 		        btnFriend.addActionListener(e -> {
 		            cardLayout.show(mainPanel, "FRIEND");
 		            header.setHeaderText("친구");
+		            JButton plusBtn = header.getPlusButton();
+		            
+		            // 기존 리스너 모두 제거 (중복 방지)
+		            for (ActionListener al : plusBtn.getActionListeners()) {
+		                plusBtn.removeActionListener(al);
+		            }
+		            
+		            plusBtn.addActionListener(e2 -> {
+		                String friendId = JOptionPane.showInputDialog(f, "추가할 친구의 ID를 입력하세요:");
+
+		                if (friendId != null && !friendId.trim().isEmpty()) {
+		                    friendId = friendId.trim();
+		                    String filePath = "src/FriendList/" + id + ".txt";
+
+		                    try {
+		                        File file = new File(filePath);
+
+		                        // 파일이 존재하지 않으면 새로 생성
+		                        if (!file.exists()) {
+		                            file.createNewFile();
+		                        }
+
+		                        // 친구목록 모두 읽어오기
+		                        boolean alreadyExists = false;
+		                        List<String> lines = new ArrayList<>();
+		                        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		                            String line;
+		                            while ((line = br.readLine()) != null) {
+		                                String[] tokens = line.split(",");
+		                                if (tokens.length > 0 && tokens[0].trim().equals(friendId)) {
+		                                    alreadyExists = true;
+		                                }
+		                                lines.add(line);
+		                            }
+		                        }
+
+		                        if (alreadyExists) {
+		                            JOptionPane.showMessageDialog(f, "이미 친구로 추가된 ID입니다.");
+		                            return;
+		                        }
+
+		                        // 친구 .ser 파일 존재 확인 (없는 아이디 추가 방지)
+		                        File friendSerFile = new File("src/UserList/" + friendId + ".ser");
+		                        if (!friendSerFile.exists()) {
+		                            JOptionPane.showMessageDialog(f, "존재하지 않는 아이디입니다.");
+		                            return;
+		                        }
+
+		                        // 파일에 새 친구 추가 (기본은 FALSE: 일반 친구)
+		                        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+		                            if (lines.size() > 0) {
+		                                bw.newLine(); // 기존 데이터가 있으면 줄바꿈
+		                            }
+		                            bw.write(friendId + ",FALSE");
+		                        }
+
+		                        JOptionPane.showMessageDialog(f, friendId + "님이 친구로 추가되었습니다.");
+		                        // 기존 mainPanel에서 FRIEND 패널을 제거하고 새로 추가
+		                        mainPanel.remove(mainPanel.getComponent(0)); // 또는 remove("FRIEND")
+		                        mainPanel.add(new FriendPanel(id), "FRIEND");
+		                        mainPanel.revalidate();
+		                        mainPanel.repaint();
+
+		                        // 그리고 친구 화면으로 다시 전환 (카드레이아웃인 경우)
+		                        cardLayout.show(mainPanel, "FRIEND");
+		                        		
+		                    } catch (IOException ex) {
+		                        ex.printStackTrace();
+		                        JOptionPane.showMessageDialog(f, "파일 처리 중 오류 발생.");
+		                    }
+		                }
+		            });
+
 		        });
+		            
 		        btnChat.addActionListener(e -> {
 		        	cardLayout.show(mainPanel, "CHAT");
 		            header.setHeaderText("채팅");
@@ -99,6 +176,7 @@ public class FrameMain extends JFrame{
 		       
 	        f.getContentPane().add(screenPanel);		          
         f.setVisible(true);
+        btnFriend.doClick();
 	}
 	
     public static void main(String[] args) {
