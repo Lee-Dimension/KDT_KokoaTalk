@@ -5,7 +5,7 @@ import java.awt.*;
 import KokoaTalk.Colors;
 
 public class MyProfilePanel extends JPanel {
-    private JPanel detailPanel;
+    private JPanel  detailPanel;
 
     public MyProfilePanel() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -33,9 +33,35 @@ public class MyProfilePanel extends JPanel {
 
         // Detail Panel
         detailPanel = new JPanel();
-        detailPanel.add(new JLabel("여기에 각 버튼 추가"));
         detailPanel.setVisible(false);
+        detailPanel.setMaximumSize(new Dimension(380, 60));
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.X_AXIS));
+        detailPanel.setBackground(Colors.BGROUNDDEEP); 
         detailPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(Box.createHorizontalGlue());
+	    JButton talkBtn = new JButton("대화하기");
+		    HideBtnDesign.apply(talkBtn);
+		    talkBtn.addActionListener(e -> {
+		        // 버튼별 기능 분기
+		    });
+		    detailPanel.add(talkBtn);
+            detailPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+	    JButton nickChange = new JButton("별명변경");
+		    HideBtnDesign.apply(nickChange);
+		    nickChange.addActionListener(e -> {
+		        // 버튼별 기능 분기
+		    });
+		    detailPanel.add(nickChange);
+            detailPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+	    JButton delFf = new JButton("즐찾제거");
+		    HideBtnDesign.apply(delFf);
+		    delFf.addActionListener(e -> {
+		        // 버튼별 기능 분기
+		    });
+		    detailPanel.add(delFf);;
+            detailPanel.add(Box.createRigidArea(new Dimension(5, 0)));      
+
+        detailPanel.add(Box.createHorizontalGlue());
 
         // 클릭 이벤트 (여기서는 패널 전체에)
         this.addMouseListener(new java.awt.event.MouseAdapter() {

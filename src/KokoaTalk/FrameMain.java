@@ -2,7 +2,6 @@ package KokoaTalk;
 
 import java.awt.*;
 import javax.swing.*;
-
 import KokoaTalk.Profile.FriendPanel;
 
 public class FrameMain extends JFrame{
@@ -44,7 +43,7 @@ public class FrameMain extends JFrame{
 		       		    
 		        //박스 패널의 세 번째 박스(버튼)
 		        JPanel btnPanel = new JPanel(new GridLayout(1,2,5,5));
-		        btnPanel.setBackground(Colors.BGROUNDDEPP);
+		        btnPanel.setBackground(Colors.BGROUNDDEEP);
 		        
 		        	//이미지 스케일링
 		        	// 원본 이미지 로드
@@ -57,7 +56,7 @@ public class FrameMain extends JFrame{
 		        	ImageIcon imgFriend = new ImageIcon(scaledImage);
 		        	
 			        JButton btnFriend = new JButton(imgFriend);
-			        btnFriend.setBackground(Colors.BGROUNDDEPP);
+			        btnFriend.setBackground(Colors.BGROUNDDEEP);
 			        btnFriend.setBorderPainted(false);      // 버튼 테두리 제거
 			        btnFriend.setFocusPainted(false);       // 포커스 표시 제거
 			        btnPanel.add(btnFriend);
@@ -73,7 +72,7 @@ public class FrameMain extends JFrame{
 		        	ImageIcon imgChat = new ImageIcon(scaledImage2);
 
 			        JButton btnChat = new JButton(imgChat);
-			        btnChat.setBackground(Colors.BGROUNDDEPP);
+			        btnChat.setBackground(Colors.BGROUNDDEEP);
 			        btnChat.setBorderPainted(false);      // 버튼 테두리 제거
 			        btnChat.setFocusPainted(false);       // 포커스 표시 제거
 			        btnPanel.add(btnChat);

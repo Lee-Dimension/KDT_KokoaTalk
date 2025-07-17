@@ -5,7 +5,7 @@ import java.awt.*;
 import KokoaTalk.Colors;
 
 public class FriendItemPanel extends JPanel {
-    private JPanel detailPanel;
+    public JPanel detailPanel;
 
     public FriendItemPanel(String name, String status, ImageIcon icon, boolean hasDetailPanel) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -33,7 +33,6 @@ public class FriendItemPanel extends JPanel {
 
         if (hasDetailPanel) {
             detailPanel = new JPanel();
-            detailPanel.add(new JLabel("여기에 각 버튼 추가"));
             detailPanel.setVisible(false);
             detailPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             
