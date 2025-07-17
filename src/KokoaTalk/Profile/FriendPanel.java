@@ -34,10 +34,13 @@ public class FriendPanel extends JPanel {
 
         // 친구 구분
         friendListPanel.add(new FriendSectionLabel("친구"));
+        
+        ImageIcon profileImg2 = new ImageIcon("src/KokoaTalkImg/free_people.png");
         // 친구 5명 (예시)
         for(int i=0; i<5; i++) {
             FriendItemPanel f = new FriendItemPanel("친구 " + (i+1), "상태메시지", profileImg, false);
             friendListPanel.add(f);
+
         }
 
         JScrollPane scrollPane = new JScrollPane(friendListPanel);
