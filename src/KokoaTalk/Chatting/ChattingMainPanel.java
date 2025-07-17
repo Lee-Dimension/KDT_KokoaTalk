@@ -7,16 +7,18 @@ import KokoaTalk.ScrollbarUI;
 
 public class ChattingMainPanel extends JFrame {
 
-    public ChattingMainPanel() {
-        setTitle("카카오톡 채팅창");
+	private String name;
+	
+    public ChattingMainPanel(String name) {
+        setTitle(name);
         setSize(400, 800); //frame 사이즈
         setBackground(new Color(220,214,247)); //배경색 지정
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //끄면 종료.
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //끄면 종료.
         setLocationRelativeTo(null); 
         
         JPanel mainPanel = new JPanel(new BorderLayout());
         
-        mainPanel.add(new ChattingHeader("친구1과의 채팅"), BorderLayout.NORTH);
+        mainPanel.add(new ChattingHeader(name), BorderLayout.NORTH);
         mainPanel.add(new ChattingFooter(), BorderLayout.SOUTH);
         
         ChattingCommunityBox1 communityBox = new ChattingCommunityBox1();
@@ -48,6 +50,6 @@ public class ChattingMainPanel extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(ChattingMainPanel::new);
+    	SwingUtilities.invokeLater(() -> new ChattingMainPanel("UserName"));
     }
 }
