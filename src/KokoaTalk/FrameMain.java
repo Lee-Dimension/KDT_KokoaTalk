@@ -2,6 +2,7 @@ package KokoaTalk;
 
 import java.awt.*;
 import javax.swing.*;
+import KokoaTalk.ChatList.ChatListPanel;
 
 import KokoaTalk.Profile.FriendPanel;
 
