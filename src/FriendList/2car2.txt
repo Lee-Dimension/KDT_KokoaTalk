@@ -1,4 +1,0 @@
-apple, 홍길동, 오늘은 목요일, 1
-banana, 이순신, 내일은 금요일, 1
-carrot, 신사임당, 주말은 일요일, 0,2car3,2car3
-heegon,FALSE

@@ -2,24 +2,38 @@ package KokoaTalk.Profile;
 
 import java.util.*;
 import java.io.*;
+import java.net.Socket;
 
 public class FriendLoader {
-    public static ArrayList<Friend> loadFriendsFromFile(String filePath) {
-        ArrayList<Friend> friends = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while((line = br.readLine()) != null) {
-                String[] tokens = line.split(",");
-                if(tokens.length < 4) continue; // skip 잘못된 라인
-                String id = tokens[0];
-                String name = tokens[1];
-                String status = tokens[2];
-                boolean isFavorite = tokens[3].trim().equals("1");
-                friends.add(new Friend(id, name, status, isFavorite));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return friends;
-    }
+	public static List<String> loadFriendList(String userId) {
+	    try (
+	        Socket socket = new Socket("localhost", 7777);
+	        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+	        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+	    ) {
+	        out.writeObject("GET_FRIENDS");
+	        out.writeObject(userId);
+	        Object response = in.readObject();
+	        if (response instanceof List<?>) {
+	            List<?> list = (List<?>) response;
+	            if (list.isEmpty() || list.get(0) instanceof String) {
+	                return (List<String>) response;
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return new ArrayList<>();
+	}
+
+
+	public static void saveFriendList(List<Friend> friends, String filename) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+	        for (Friend friend : friends) {
+	            writer.write(friend.toString()); // toString() → 적당히 포맷
+	            writer.newLine();
+	        }
+	    } catch (IOException e) { e.printStackTrace(); }
+	}
+
 }

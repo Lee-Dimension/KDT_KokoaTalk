@@ -1,12 +1,12 @@
 package KokoaTalk.Profile;
 
-import KokoaTalk.FrameMain;
-import KokoaTalk.Colors;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.Socket;
+import KokoaTalk.Colors;
+import KokoaTalk.FrameMain;
 
 public class UserLoginGUI extends JFrame {
 
@@ -24,7 +24,7 @@ public class UserLoginGUI extends JFrame {
         JLabel logoLabel = new JLabel("코코아톡");
         logoLabel.setBackground(Colors.BGROUND);
         logoLabel.setOpaque(true);
-        logoLabel.setFont(new Font("SanSefit", Font.BOLD, 24));
+        logoLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         logoLabel.setForeground(Colors.TEXT);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
@@ -46,16 +46,37 @@ public class UserLoginGUI extends JFrame {
         signUpBtn = new JButton("회원가입");
         HideBtnDesign.apply(signUpBtn);
         signUpPanel.add(signUpBtn);
-        
+
         add(signUpPanel, BorderLayout.SOUTH);
         setVisible(true);
-        
-        //로그인 버튼 클릭 시
+
+        // 로그인 버튼 클릭 시
         loginBtn.addActionListener(new LoginAction());
-        
+
         // 회원가입 버튼 클릭 시
         signUpBtn.addActionListener( e -> {new SignUpGUI();});
-        
+    }
+
+    // 서버에 로그인 요청하는 메서드
+    private UserClass loginToServer(String enteredId) {
+        try (
+            Socket socket = new Socket("localhost", 7777);
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        ) {
+            out.writeObject("LOGIN");
+            out.writeObject(enteredId);
+
+            Object response = in.readObject();
+            if (response instanceof UserClass) {
+                return (UserClass) response;
+            } else {
+                return null;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // 로그인 버튼 이벤트
@@ -68,25 +89,14 @@ public class UserLoginGUI extends JFrame {
                 return;
             }
 
-            File userFile = new File("src/UserList/"+enteredId + ".ser");
-            if (userFile.exists()) {
-                // 직렬화된 객체 불러오기
-                UserClass user = UserFileManager.loadUser("src/UserList/"+enteredId + ".ser");
-                if (user != null) {
-                    JOptionPane.showMessageDialog(null, "로그인 성공! " + user.getName() + "님 환영합니다!");
-                    new FrameMain(enteredId);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "유저 정보 로딩 실패");
-                }
+            UserClass user = loginToServer(enteredId);
+            if (user != null) {
+                JOptionPane.showMessageDialog(null, "로그인 성공!\n" + user.getName() + "님 환영합니다!");
+                new FrameMain(enteredId);
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "해당 아이디를 찾을 수 없습니다.");
             }
         }
-    }
-
-
-    public static void main(String[] args) {
-        new UserLoginGUI();
     }
 }

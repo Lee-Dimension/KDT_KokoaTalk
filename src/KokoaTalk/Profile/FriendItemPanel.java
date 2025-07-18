@@ -71,6 +71,7 @@ public class FriendItemPanel extends JPanel {
             }
         });
     }
+    
 
     public JPanel getDetailPanel() {
         return detailPanel;
