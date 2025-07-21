@@ -7,7 +7,7 @@ Java Swing을 이용한 GUI와 소켓 통신을 통해 사용자 간의 실시�
 
 <img width="1375" height="558" alt="KakaoTalk_20250721_110700186" src="https://github.com/user-attachments/assets/7d794bf4-6c12-44f0-a7f7-d6c7d60c0a56" />
 
-##-팀원 소개
+## - 팀원 소개
 팀원 1: 이차원 (메인 UI 및 데이터저장, 각종버튼 기능 등)
 팀원 2: 김희곤 (채팅창 UI 및 대화기능 )
 
