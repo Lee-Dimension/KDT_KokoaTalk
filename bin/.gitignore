@@ -1,7 +1,5 @@
-/FriendList/
-/KokoaTalk/
-/KokoaTalkImg/
-/ProfileImage/
-/Server/
-/UserList/
+/client/
+/data/
+/model/
 /module-info.class
+/server/
