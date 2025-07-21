@@ -33,15 +33,6 @@ Java Swing (GUI)
 
 프로필 사진 등 이미지 전송 기능
 
--프로젝트 구조
-client/
-├── gui/               # Swing 기반 GUI 컴포넌트
-├── service/           # 로직 및 네트워크 처리
-├── MainFrame.java     # 메인 프레임 (소켓 공유 중심)
-server/
-├── MainServer.java    # 서버 메인
-├── ClientHandler.java # 각 클라이언트 처리 스레드
-
 -팀원 소개
 팀원 1: 이차원 (메인 UI 및 데이터저장, 각종버튼 기능 등)
 팀원 2: 김희곤 (채팅창 UI 및 대화기능 )
