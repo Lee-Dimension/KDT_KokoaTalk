@@ -5,6 +5,8 @@
 Java Swing을 이용한 GUI와 소켓 통신을 통해 사용자 간의 실시간 메시지 송수신을 구현했습니다.  
 
 
+<img width="1375" height="558" alt="KakaoTalk_20250721_110700186" src="https://github.com/user-attachments/assets/7d794bf4-6c12-44f0-a7f7-d6c7d60c0a56" />
+
 
 ## -주요 기술 스택
 Java 21
