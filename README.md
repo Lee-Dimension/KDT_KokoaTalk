@@ -8,7 +8,7 @@ Java Swing을 이용한 GUI와 소켓 통신을 통해 사용자 간의 실시�
 
 
 <img width="1375" height="558" alt="KakaoTalk_20250721_110700186" src="https://github.com/user-attachments/assets/7d794bf4-6c12-44f0-a7f7-d6c7d60c0a56" />
-https://www.figma.com/design/XwYIMDrtvI11Hi3YmlNZTG/%EC%BD%94%EC%BD%94%EC%95%84%ED%86%A1?node-id=0-1&p=f
+[https://www.figma.com/design/XwYIMDrtvI11Hi3YmlNZTG/%EC%BD%94%EC%BD%94%EC%95%84%ED%86%A1?node-id=0-1&p=f](https://www.figma.com/design/XwYIMDrtvI11Hi3YmlNZTG/%EC%BD%94%EC%BD%94%EC%95%84%ED%86%A1?node-id=0-1&t=uMYH0AWxWYhl7p9m-1)
 
 
 ## 🧔 팀원 소개
