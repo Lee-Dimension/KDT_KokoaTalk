@@ -10,7 +10,7 @@ Java Swing을 이용한 GUI와 소켓 통신을 통해 사용자 간의 실시�
 [<img width="1375" height="558" alt="KakaoTalk_20250721_110700186" src="https://github.com/user-attachments/assets/7d794bf4-6c12-44f0-a7f7-d6c7d60c0a56" />
 [https://www.figma.com/design/XwYIMDrtvI11Hi3YmlNZTG/%EC%BD%94%EC%BD%94%EC%95%84%ED%86%A1?node-id=0-1&p=f]](https://www.figma.com/design/hcURe4PyudiwkFbQEw6FZx/%EC%BD%94%EC%BD%94%EC%95%84%ED%86%A1?t=dXaSNt8ZXce1Zfql-1)
 
-## 🧔 팀원 소개
+##  팀원 소개
 
 팀원 1: 이차원 (메인 UI 및 데이터저장, 각종버튼 기능 등)
 
@@ -23,7 +23,7 @@ Java Swing (GUI)
 
 멀티스레드 기반 서버 처리
 
-## 📍 주요 기능
+##  주요 기능
 
 - 회원가입 및 로그인 기능
 
@@ -43,7 +43,7 @@ Java Swing (GUI)
 프로필 사진 등 이미지 전송 기능
 
 
-## 📌 프로젝트 회고
+##  프로젝트 회고
 
 - 처음부터 끝까지 직접 설계하고 구현해보며 Java와 소켓 통신, GUI 구현 역량을 키울 수 있었던 뜻깊은 프로젝트였습니다.
 이번 코코아톡 프로젝트는 단순한 채팅 기능 구현을 넘어서, 소프트웨어 구조 설계와 팀 간 소통의 중요성을 깊이 체감할 수 있었던 경험이었습니다.
